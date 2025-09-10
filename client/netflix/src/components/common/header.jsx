@@ -1,21 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 
 export default function Header() {
-    const navigate = useNavigate();
     const location = useLocation();
     const [showSignup, setShowSignup] = useState(true);
-    if (location.pathname === "/signup") {
-        if (showSignup) {
-            setShowSignup(false);
-        }
-    } else {
-        if (!showSignup) {
-            setShowSignup(true);
-        }
-    }
     return (
         <nav className="flex p-5">
             <div className="w-[100%] flex ">

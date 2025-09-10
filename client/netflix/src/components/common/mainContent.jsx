@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
+import { IoEyeOutline } from "react-icons/io5";
+import { IoEyeOffOutline } from "react-icons/io5";
 
 export default function MainContent() {
 
@@ -9,17 +11,20 @@ export default function MainContent() {
     const [role,setRole]=useState('')
     const navigate = useNavigate();
 
+    const [show,setShow] = useState(false);
+    const handleClick = () =>{
+        setShow(!show)
+    }
+
     const handleSubmit = async (e) =>{
         e.preventDefault();
         try {
             const response = await axios.post(`http://localhost:8060/api/${role}/login`,
                 {
-                    email:email,
-                    pass:password,
-                    role:role
+                    email,
+                    pass:password
                 }
             )
-            alert("Login Successful")
             console.log(response.data.token);
             localStorage.setItem("token",response.data.token)
         } catch (error) {
@@ -28,11 +33,14 @@ export default function MainContent() {
     }
     return (
         <div className="min-h-screen flex flex-col place-items-center">
-            <div className="bg-black w-[50%] flex flex-col items-center justify-center rounded-2xl p-5">
+            <div className="bg-black w-[50%] flex flex-col items-center justify-center rounded-2xl p-8">
                 <form onSubmit={handleSubmit} className="flex flex-col w-full items-center justify-center">
                     <h1 className="font-bold text-4xl text-white">Sign In</h1>
                     <input type="email" name="email" className="bg-gray-800 text-lg w-[60%] text-white p-4 rounded-lg mt-10" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-                    <input type="password" name="password" className="bg-gray-800 text-lg w-[60%] text-white p-4  rounded-lg mt-10" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+                    <div className="relative flex w-[60%]">
+                        <input type={show ? "text":"password"} name="password" className="bg-gray-800 text-lg w-full text-white p-4  rounded-lg mt-10" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+                        <p onClick={handleClick} className="text-white text-xl absolute top-15 right-5 cursor-pointer">{show ? <IoEyeOutline />:<IoEyeOffOutline />}</p>
+                    </div>
                     <input type="text" name="role" className="bg-gray-800 text-lg w-[60%] text-white p-4  rounded-lg mt-10" placeholder="Role" value={role} onChange={(e)=>setRole(e.target.value)}/>
                     <div className="flex flex-row items-center justify-center w-[100%] p-10">
                         <button className="bg-red-600 cursor-pointer text-white text-xl font-semibold px-5 py-3 rounded-lg" type="submit">Login</button>
