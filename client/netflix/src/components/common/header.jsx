@@ -1,10 +1,23 @@
+import { useState } from "react";
 import MainContent from "./mainContent"
 import SignUp from "./signup"
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 
 export default function Header() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const [showSignup, setShowSignup] = useState(true);
+    if (location.pathname === "/signup") {
+        if (showSignup) {
+            setShowSignup(false);
+        }
+    } else {
+        if (!showSignup) {
+            setShowSignup(true);
+        }
+    }
     return (
         <nav className="flex p-5">
             <div className="w-[100%] flex ">
@@ -27,7 +40,6 @@ export default function Header() {
                         <option>French</option>
                     </select>
                         </div>
-                    <button onClick={() => navigate("/signup")} className="bg-red-600 text-white px-5 py-3 rounded-lg hover:bg-red-800">Sign Up</button>
                 </div> 
             </div>
         </nav>
