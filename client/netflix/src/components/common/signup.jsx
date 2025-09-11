@@ -11,7 +11,7 @@ export default function SignUp() {
     const [password, setPassword] = useState("");
 
     const [show,setShow] = useState(false);
-    
+
     const handleClick = () =>{
         setShow(!show)
     }
@@ -29,7 +29,8 @@ export default function SignUp() {
                 pass: password
             });
             console.log(response.data);
-            localStorage.setItem(response.data.message)
+            console.log(response.data.message);
+            localStorage.setItem("token",response.data.message)
         } catch (error) {
             console.error(error);
         }

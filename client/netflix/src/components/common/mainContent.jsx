@@ -4,11 +4,19 @@ import { useNavigate } from "react-router-dom";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
 
+function setCookie(name,value,days){
+  const expire = new Date(Date.now() + days*24*60*60*1000).toUTCString();
+  document.cookie = `${name}=${value}; expires=${expire}; path=/`;
+}
+
+
 export default function MainContent() {
 
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
     const [role,setRole]=useState('')
+    const [message,setMessage]= useState(null);
+
     const navigate = useNavigate();
 
     const [show,setShow] = useState(false);
@@ -23,16 +31,20 @@ export default function MainContent() {
                 {
                     email,
                     pass:password
-                }
+                },
             )
             console.log(response.data.token);
-            localStorage.setItem("token",response.data.token)
+            if( response.data.token){
+                setCookie("token",response.data.token,1);
+                localStorage.setItem("token",response.data.token);
+                navigate(`/${role}dash`);
+            }
         } catch (error) {
             console.log(error);
         }
     }
     return (
-        <div className="min-h-screen flex flex-col place-items-center">
+        <div className="min-h-screenflex flex-col place-items-center">
             <div className="bg-black w-[50%] flex flex-col items-center justify-center rounded-2xl p-8">
                 <form onSubmit={handleSubmit} className="flex flex-col w-full items-center justify-center">
                     <h1 className="font-bold text-4xl text-white">Sign In</h1>

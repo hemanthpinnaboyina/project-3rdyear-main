@@ -11,10 +11,21 @@ exports.genreCreate= async (req,res)=>{
     const genreData  = await prisma.genre.create({
         data:{
             name
-        }
+        },
+        select: {
+        id: true,
+        name: true,
+      },
     });
     res.status(201).send({message:'created genre',status:true,data:genreData})
     }catch(err){
+        if (err.code === 'P2002') 
+        {
+            return res.status(400).send({
+            message: 'Genre name already exists',
+            status: false
+            });
+        }
        res.status(400).send({message:err,status:false})
        console.log(err.message)
     }  
@@ -36,7 +47,15 @@ exports.getGenreById = async(req,res) =>{
     try{
         const genre = await prisma.genre.findUnique({
             where:{id:genreId},
-            select:{id:true,name:true,movies:true}
+            select:{
+                id:true,
+                name:true,
+                movies:{
+                    select:{
+                        name:true,
+                    }
+                }
+            }
         });
         if(!genre){
             return res.status(404).send({message:'Genre not found',status:false});
@@ -47,30 +66,17 @@ exports.getGenreById = async(req,res) =>{
     }
 }
 
-exports.updateGenre = async(req,res) =>{
-    const genreId = req.params.id;
-    const {name,movies} = req.body;
-    try{
-        const genre = await prisma.genre.update({
-            where:{id:genreId},
-            data:{
-                name,
-                movies
-            }
-        });
-        res.status(200).send({message:'Updated genre',status:true,data:genre})
-    }catch(err){
-        res.status(400).send({message:err,status:false})
-    }
-}
-
 exports.getGenreMovies = async(req,res) =>{
     const genreId = req.params.id;
     try{
-        const movies = await prisma.movie.findMany({
-            where:{genreId},
-            select:{id:true,title:true}
+        const movies = await prisma.movies.findMany({
+            where:{genreId: genreId},
+            select:{id:true,name:true}
         });
+        if (movies.length === 0)
+        {
+            return res.status(404).send({ message: "No movies found for this genre", status: false });
+        }
         res.status(200).send({message:'Fetched genre movies',status:true,data:movies})
     }catch(err){
         res.status(400).send({message:err,status:false})

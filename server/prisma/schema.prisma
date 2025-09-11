@@ -12,22 +12,22 @@ model User {
   name String?
   role String
   createdAt  DateTime @default(now()) //current TimeStamp
-  email String
+  email String @unique
   pass String
 }
 model Genre{
   id  String   @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+  name String @unique
   movies Movies[] //one to many relationship with Movies
 }
 model Movies{
   id  String   @id @default(auto()) @map("_id") @db.ObjectId
-  title String
+  name String
   desc String
   year Int
   url String
   addedAt DateTime @default(now())
-  genreId  String @db.ObjectId
+  genreId  String
   genre Genre @relation(fields: [genreId], references: [id]) //FK
-  rating Int @default(0)
+  rating Float
 }

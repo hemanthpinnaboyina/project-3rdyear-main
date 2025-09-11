@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainContent from './components/common/mainContent'
 import SignUp from './components/common/signup'
-import Header from './components/common/header'
+import AdminDash from './components/common/adminDash';
+import Header from "./components/common/header";
+import AddMovie from "./components/common/addMovie";
 
 const App = () => {
   return (
@@ -11,6 +13,8 @@ const App = () => {
       <Routes>
         <Route path="/"  element={<MainContent />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/admindash" element={<AdminDash />} />
+        <Route path="/addMovie" element={<AddMovie />} />
       </Routes>
     </Router>
     </div>

@@ -6,18 +6,18 @@ const authenticateMiddleware = require('../middleware/authenticateMiddleware');
 const {verifyAdmin} = authenticateMiddleware;
 const {adminLogin,adminRegister,adminChangePass} = authController;
 const {getAllUsers} = adminController;
-const {genreCreate,updateGenre,getGenreById} = require('../controller/genreController');
-const { createMovie } = require('../controller/movieController');
+const {genreCreate,getGenreById,getAllGenres} = require('../controller/genreController');
+const { createMovie,updateMovie,deleteMovie,updateMovieRating } = require('../controller/movieController');
 
 router.post('/register',adminRegister);
 router.post('/login',adminLogin); //middleware passed
 router.get('/allUsers',verifyAdmin,getAllUsers);
-router.post('/addMovie',verifyAdmin,createMovie);
+router.put('/changePass/:id',adminChangePass);
 router.post('/createGenre',verifyAdmin,genreCreate);
-router.get('/viewGenre/:id',verifyAdmin,getGenreById);
-router.put('/updateGenre/:id',verifyAdmin,updateGenre);
-router.put('/changePass/:id',verifyAdmin,adminChangePass);
-router.get('/viewMovies',verifyAdmin,(req,res)=>{res.send(201)});
-router.patch('/updateMovies',verifyAdmin,(req,res)=>{res.send(201)});
+router.get('/viewAllGenres',getAllGenres);
+router.post('/addMovie',verifyAdmin,createMovie);
+router.post('/updateMovie/:id',verifyAdmin,updateMovie);
+router.delete('/deleteMovie/:id',verifyAdmin,deleteMovie);
+router.put('/rating/:id',verifyAdmin,updateMovieRating)
 
 module.exports = router;

@@ -3,6 +3,7 @@ const app = express()
 const cors = require("cors")
 require('dotenv').config()
 app.use(express.json())//middleware
+
 const adminRouter = require('./router/adminRoute');
 const userRouter = require('./router/userRoutes');
 const paymentRouter = require('./router/paymentRoutes');
