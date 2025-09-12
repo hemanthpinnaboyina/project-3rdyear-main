@@ -4,6 +4,7 @@ import SignUp from './components/common/signup'
 import AdminDash from './components/common/adminDash';
 import Header from "./components/common/header";
 import AddMovie from "./components/common/addMovie";
+import AddGenre from "./components/common/addGenre";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/admindash" element={<AdminDash />} />
         <Route path="/addMovie" element={<AddMovie />} />
+        <Route path="/addGenre" element={<AddGenre />} />
       </Routes>
     </Router>
     </div>

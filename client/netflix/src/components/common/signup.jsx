@@ -29,8 +29,9 @@ export default function SignUp() {
                 pass: password
             });
             console.log(response.data);
-            console.log(response.data.message);
             localStorage.setItem("token",response.data.message)
+            alert("Sign Up Completed Successfully")
+            navigate(`/`)
         } catch (error) {
             console.error(error);
         }

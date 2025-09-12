@@ -41,6 +41,7 @@ export default function MainContent() {
             }
         } catch (error) {
             console.log(error);
+            alert("invalid crenditals")
         }
     }
     return (
