@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
-export default function AdminDash() {
+export default function AdminDash() {    
+
     const navigate = useNavigate();
     return (
         <div className="flex flex-col items-center justify-center ml-[33%] mt-[5%] w-[32%] bg-gray-900 p-4">

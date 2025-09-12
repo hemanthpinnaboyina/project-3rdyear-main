@@ -6,6 +6,11 @@ export default function AddGenre() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!name.trim()) {
+            alert("Genre name cannot be empty!");
+            return;
+        }
+
         try {
             const response = await axios.post(`http://localhost:8060/api/admin/createGenre`, 
             { 
@@ -17,9 +22,9 @@ export default function AddGenre() {
                     },
             }
         );
-            console.log(response.data);
-            console.log(response.data.message);
-            alert("Genre Added Successfully")
+        console.log(response.data);
+        alert("Genre Added Successfully")
+        setName("")
         } catch (error) {
             console.error(error);
             alert("Genre already exists")

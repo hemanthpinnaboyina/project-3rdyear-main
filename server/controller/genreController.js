@@ -6,11 +6,14 @@ require('dotenv').config()
 
 exports.genreCreate= async (req,res)=>{
     const {name} = req.body
-    
+    if (!name || name.trim() === "") {
+        return res.status(400).json({ message: "Genre name is required" });
+    }
+
     try{
     const genreData  = await prisma.genre.create({
         data:{
-            name
+            name:name.trim()
         },
         select: {
         id: true,
@@ -18,6 +21,7 @@ exports.genreCreate= async (req,res)=>{
       },
     });
     res.status(201).send({message:'created genre',status:true,data:genreData})
+
     }catch(err){
         if (err.code === 'P2002') 
         {

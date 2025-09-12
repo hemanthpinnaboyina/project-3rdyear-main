@@ -1,8 +1,16 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 export default function Header() {
+
+    const token = localStorage.getItem("token");
+    const navigate = useNavigate()
+
+    const handleLogOut = ()=>{
+            localStorage.removeItem("token")
+            navigate('/')
+    }
+
     const location = useLocation();
     return (
         <nav className="flex p-5">
@@ -26,6 +34,11 @@ export default function Header() {
                             <option>French</option>
                         </select>
                     </div>
+                        <div>
+                            {token && (
+                                <button onClick={handleLogOut} className="flex bg-red-600 text-white px-2.5 py-2.5 rounded-lg hover:cursor-pointer">Logout</button>
+                            )}
+                        </div>
                 </div> 
             </div>
         </nav>

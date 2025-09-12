@@ -30,7 +30,7 @@ export default function SignUp() {
             });
             console.log(response.data);
             localStorage.setItem("token",response.data.message)
-            alert("Sign Up Completed Successfully")
+            alert("SignUp Completed Successfully")
             navigate(`/`)
         } catch (error) {
             console.error(error);
